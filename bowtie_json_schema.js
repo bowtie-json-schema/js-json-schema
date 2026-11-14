@@ -66,6 +66,16 @@ const cmds = {
 
     const testCase = args.case;
 
+    if (args.output && args.output !== "flag") {
+      return {
+        seq: args.seq,
+        results: testCase.tests.map(() => ({
+          skipped: true,
+          message: `unsupported output format ${args.output}`,
+        })),
+      };
+    }
+
     try {
       const validator = new Validator(testCase.schema, DRAFTS[dialect]);
       for (const id in testCase.registry) {
